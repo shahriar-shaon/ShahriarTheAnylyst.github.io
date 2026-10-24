@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Bike Buyer Analysis - Shahriar The Analyst</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+</head>
+<body class="is-preload">
+
+	<div id="wrapper" class="fade-in">
+
+		<!-- Header -->
+		<header id="header">
+			<a href="index.html" class="logo">Shahriar The Analyst</a>
+		</header>
+
+		<!-- Main -->
+		<div id="main">
+
+			<section class="post">
+				<header class="major">
+					<span class="date">Excel Dashboard Project</span>
+					<h1>Who actually buys a bike?</h1>
+					<p>I analysed 1,000 customer records in Excel to find which customers are most likely to buy a bike, and built an interactive dashboard from the results.</p>
+				</header>
+
+				<!-- FINAL DASHBOARD -->
+				<h2>Final dashboard</h2>
+				 <p></p>Final Bike Sales Dashboard (screenshot of the interactive Excel version). The slicers filter by region, commute distance, gender, purchase status and age group.</em></p>
+				<div class="image main"><img src="images/dashboard.png" alt="Final Excel dashboard for the bike buyer analysis" /></div>
+
+				<h2>The challenge</h2>
+				<p>A bike company wants to know which customers are most likely to buy, so marketing can target the right people instead of treating everyone the same.</p>
+
+				<h2>The data</h2>
+				<p>1,000 customer records with 13 attributes: income, age, gender, marital status, children, education, occupation, home ownership, cars owned, commute distance and region. The result I measured is <strong>Purchased Bike</strong> (Yes / No).</p>
+
+				<h2>What I did in Excel</h2>
+<ul>
+	<li><strong>Cleaned the data:</strong> Checked for missing values and made the column consistent.</li>
+
+    <li><strong>Removed duplicates:</strong> Deleted repeated customer records so every person is counted only once.</li>
+    <li><strong>Made the columns easier to read:</strong>
+        <ul>
+            <li>Marital Status: changed <code>M</code> and <code>S</code> to <strong>Married</strong> and <strong>Single</strong>.</li>
+        <li>Gender: changed <code>M</code> and <code>F</code> to <strong>Male</strong> and <strong>Female</strong>.</li>
+        <li>Income: Formatted as currency, so values like 40000 show as $40,000.</li>
+        <li>Commute Distance: changed <code>10+ Miles</code> to <strong>Above 10 Miles</strong>, so the distance groups follow a clear order from shortest to longest.</li>
+        </ul>
+    </li>
+    <li><strong>Created an Age Group column:</strong> With an <code>IF</code> formula: Early Career (35 and under), Middle Career (36 to 50) and Late Career (51 and over).</li>
+    <li><strong>Built pivot tables:</strong> Comparing bike purchases by age group, gender, region, marital status, education, occupation, cars owned, commute distance and home ownership.</li>
+    <li><strong>Designed the dashboard:</strong> With KPI cards (customers, bikes sold, purchase %, average income), charts and slicers so anyone can filter the results.</li>
+</ul>
+
+<h2>Behind the dashboard: pivot tables</h2>
+<p>Each chart on the dashboard is built from one of these pivot tables.</p>
+
+<span class="image fit"><img src="images/pivot.png" alt="Pivot tables used to build the dashboard" /></span>
+				<h2>Key findings</h2>
+				<ul>
+					<li>Overall, <strong>48.1%</strong> of customers bought a bike (481 out of 1,000).</li>
+					<li><strong>Middle-career customers (36 to 50)</strong> buy the most: 54.7%, compared with 39.9% for ages 51 and over.</li>
+					<li><strong>Cars owned is a strong signal.</strong> Customers with no car buy at 61%, with two cars only 36%.</li>
+					<li><strong>Commute distance matters.</strong> Commutes up to 5 miles buy at 55 to 59%, while over 10 miles drops to 30%.</li>
+					<li><strong>Pacific region</strong> leads at 59%, North America trails at 43%.</li>
+					<li><strong>Single customers</strong> buy more than married ones (54% vs 43%).</li>
+					<li>Income plays only a modest role, and gender and home ownership made almost no difference.</li>
+				</ul>
+
+				<h2>Recommendation</h2>
+				<p>Focus marketing on middle-career, single customers with short commutes and few cars, especially in the Pacific region. This group converts better than a broad campaign.</p>
+
+				<h2>Tools used</h2>
+				<p>Excel, PivotTables, Slicers, Dashboard design, IF formulas.</p>
+
+				<ul class="actions special">
+					<li><a href="index.html" class="button">Back to portfolio</a></li>
+				</ul>
+			</section>
+
+		</div>
+
+		<!-- Copyright -->
+		<div id="copyright">
+			<ul><li>&copy; Shahriar The Analyst</li></ul>
+		</div>
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.scrollex.min.js"></script>
+	<script src="assets/js/jquery.scrolly.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+
+</body>
+</html>

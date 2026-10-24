@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Sales Dashboard - Shahriar The Analyst</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+</head>
+<body class="is-preload">
+
+	<div id="wrapper" class="fade-in">
+
+		<!-- Header -->
+		<header id="header">
+			<a href="index.html" class="logo">Shahriar The Analyst</a>
+		</header>
+
+		<!-- Main -->
+		<div id="main">
+
+			<section class="post">
+				<header class="major">
+					<span class="date">Excel Dashboard Project</span>
+					<h1>Where does the revenue come from?</h1>
+					<p>I turned 2,000 raw sales orders into an interactive Excel dashboard that shows revenue, orders and performance by month, region, product and sales channel.</p>
+				</header>
+
+				<!-- FINAL DASHBOARD -->
+				<div class="image main"><img src="images/sales-project2-final dashboard.png" alt="Final Excel sales dashboard" /></div>
+				<p style="text-align:center"><em>Final Sales Dashboard (screenshot of the interactive Excel version). The slicers filter by region, sales channel, customer type and product category.</em></p>
+
+				<h2>The challenge</h2>
+				<p>A manager wants to review sales performance quickly: how much revenue came in, how many orders, which regions, products and channels perform best, and how sales change through the year.</p>
+
+				<h2>The data</h2>
+				<p>2,000 order records from January to December 2026 with 12 columns: Order ID, Date, Region, Sales Channel, Customer Type, Product Category, Product, Salesperson, Quantity, Unit Price, Discount and Revenue.</p>
+
+				<h2>What I did in Excel</h2>
+				<ul>
+					<li><strong>Checked the data first:</strong> confirmed there were no blank headers, that dates were recognised as dates, that Revenue and Quantity were numbers, and that category names were spelled consistently with no duplicate orders.</li>
+					<li><strong>Planned the dashboard:</strong> matched each business question to a dashboard element and the column needed to answer it.</li>
+					<li><strong>Built 9 PivotTables:</strong> four for the KPIs (total revenue, total orders, total quantity sold, average order value) and five for the charts (revenue by month, region, product category, sales channel and top 5 products).</li>
+					<li><strong>Created the charts:</strong> a line chart for the monthly trend, bar charts for region, product category and top products, and a doughnut chart for sales channel.</li>
+					<li><strong>Added slicers</strong> for Region, Sales Channel, Customer Type and Product Category, connected to every pivot so the whole dashboard updates with one click.</li>
+				</ul>
+
+				<!-- PIVOT TABLES -->
+				<h2>Behind the dashboard: pivot tables</h2>
+				<span class="image fit"><img src="images/sales-project2-pivot.png" alt="Pivot tables used to build the sales dashboard" /></span>
+				<p style="text-align:center"><em>Each KPI card and chart on the dashboard is built from one of these pivot tables.</em></p>
+
+				<h2>Key findings</h2>
+				<ul>
+					<li>Total revenue was <strong>$2.45M</strong> from <strong>2,000 orders</strong> and <strong>5,552 units</strong>, an average order value of about <strong>$1,226</strong>.</li>
+					<li><strong>Computers drive the business:</strong> they bring in 55% of revenue ($1.35M) from only 338 orders. Accessories and office supplies make up 749 orders but just 3.7% of revenue.</li>
+					<li>The <strong>top 5 products</strong> (led by the Gaming Laptop at $433K) generate about 58% of all revenue.</li>
+					<li><strong>Online is the biggest channel</strong> at 32% of revenue. <strong>Corporate Sales</strong> comes second at 29% with only 333 orders, because the average corporate order is about $2,158, the highest of any channel.</li>
+					<li><strong>Marketplace is the weakest channel</strong> at 13% of revenue, with the lowest average order (about $839).</li>
+					<li><strong>North and Central</strong> lead the regions at about 23% each, and West is lowest at 17%.</li>
+					<li><strong>Returning customers</strong> account for 69% of revenue.</li>
+					<li>Sales peak in <strong>November ($274K)</strong> and dip in <strong>July ($151K)</strong> and <strong>May ($154K)</strong>.</li>
+				</ul>
+
+				<h2>Recommendation</h2>
+				<p>Protect and promote the computer range, since a small number of high-value orders drives most of the revenue. Grow corporate sales, where each order is worth the most, and review the marketplace channel, which brings in many small orders. Plan stock and promotions around the November peak, and look for ways to lift the mid-year dip.</p>
+
+				<h2>Tools used</h2>
+				<p>Excel, PivotTables, PivotCharts, Slicers, Dashboard design.</p>
+
+				<ul class="actions special">
+					<li><a href="index.html" class="button">Back to portfolio</a></li>
+				</ul>
+			</section>
+
+		</div>
+
+		<!-- Copyright -->
+		<div id="copyright">
+			<ul><li>&copy; Shahriar The Analyst</li></ul>
+		</div>
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.scrollex.min.js"></script>
+	<script src="assets/js/jquery.scrolly.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>SQL Budget vs Actual Analysis - Shahriar The Analyst</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+</head>
+<body class="is-preload">
+
+	<div id="wrapper" class="fade-in">
+
+		<!-- Header -->
+		<header id="header">
+			<a href="index.html" class="logo">Shahriar The Analyst</a>
+		</header>
+
+		<!-- Main -->
+		<div id="main">
+
+			<section class="post">
+				<header class="major">
+					<span class="date">SQL FP&amp;A Project</span>
+					<h1>Which departments are over budget?</h1>
+					<p>I used SQL to compare budget and actual spending across departments, measure the variances, and build a monthly report for management.</p>
+				</header>
+
+				<!-- FINAL REPORT -->
+				<h2>Final report</h2>
+				<p><em>Final management report: monthly budget, actual, variance and cumulative spending for each department (result of Query 5 below).</em></p>
+				<div class="image main"><img src="images/sql-report.png" alt="SQL management report showing budget, actual, variance and cumulative spending by department" /></div>
+
+				<h2>The challenge</h2>
+				<p>The Finance Director needs a clear view of departmental performance. The data has monthly budgets and actual spending, but nobody can easily see which departments are over budget, how spending changes from month to month, or where to look first.</p>
+
+				<h2>The data</h2>
+				<p>Two tables joined on <code>department_id</code>: <strong>monthly_finance</strong> (month, department, budget, actual) and <strong>departments</strong> (department ID and name). The sample covers 3 departments over 2 months (6 records). The figures are illustrative, not real company results. HR has no financial records, so it does not appear in the results.</p>
+				<p><strong>Table A: monthly_finance</strong> (monthly budget and actual for each department)</p>
+				<div class="table-wrapper"><table><thead><tr><th>month</th><th>department_id</th><th>budget</th><th>actual</th></tr></thead><tbody><tr><td>2026-01-01</td><td>1</td><td>100000</td><td>95000</td></tr><tr><td>2026-01-01</td><td>2</td><td>50000</td><td>60000</td></tr><tr><td>2026-01-01</td><td>3</td><td>30000</td><td>28000</td></tr><tr><td>2026-02-01</td><td>1</td><td>110000</td><td>125000</td></tr><tr><td>2026-02-01</td><td>2</td><td>55000</td><td>52000</td></tr><tr><td>2026-02-01</td><td>3</td><td>32000</td><td>35000</td></tr></tbody></table></div>
+				<p><strong>Table B: departments</strong> (department names)</p>
+				<div class="table-wrapper"><table><thead><tr><th>department_id</th><th>department_name</th></tr></thead><tbody><tr><td>1</td><td>Sales</td></tr><tr><td>2</td><td>IT</td></tr><tr><td>3</td><td>Finance</td></tr><tr><td>4</td><td>HR</td></tr></tbody></table></div>
+
+				<h2>What I did in SQL</h2>
+				<ul>
+					<li><strong>Joined the tables:</strong> Combined the financial figures with department names using <code>JOIN</code>.</li>
+					<li><strong>Calculated totals and variances:</strong> Used <code>SUM</code> and <code>GROUP BY</code> to get budget, actual, variance and variance % for each department.</li>
+					<li><strong>Labelled performance:</strong> Used <code>CASE WHEN</code> to mark each department as Above, Below or On Budget.</li>
+					<li><strong>Tracked monthly changes:</strong> Used the <code>LAG()</code> window function to compare each month with the one before.</li>
+					<li><strong>Counted over and under months:</strong> Used conditional <code>SUM(CASE WHEN ...)</code> to see how often each department missed its budget.</li>
+					<li><strong>Benchmarked against the average:</strong> Used a CTE to find departments above the average department total.</li>
+					<li><strong>Built the management report:</strong> Added a running total with <code>SUM() OVER (PARTITION BY ...)</code> so management sees monthly and cumulative spending together.</li>
+				</ul>
+
+				<h2>Behind the report: SQL queries</h2>
+				<p>Each result in the findings below comes from one of these queries.</p>
+
+				<h3>1. Department performance summary</h3>
+<pre><code>SELECT
+    d.department_name,
+    SUM(m.budget) AS total_budget,
+    SUM(m.actual) AS total_actual,
+    SUM(m.actual) - SUM(m.budget) AS variance,
+    ROUND((SUM(m.actual) - SUM(m.budget)) * 100.0 / SUM(m.budget), 2) AS variance_pct,
+    CASE
+        WHEN SUM(m.actual) &gt; SUM(m.budget) THEN 'Above Budget'
+        WHEN SUM(m.actual) &lt; SUM(m.budget) THEN 'Below Budget'
+        ELSE 'On Budget'
+    END AS status
+FROM monthly_finance m
+JOIN departments d ON d.department_id = m.department_id
+GROUP BY d.department_id, d.department_name
+ORDER BY variance DESC;</code></pre>
+				<p><strong>Output:</strong></p>
+				<div class="table-wrapper"><table><thead><tr><th>department_name</th><th>total_budget</th><th>total_actual</th><th>variance</th><th>variance_pct</th><th>status</th></tr></thead><tbody><tr><td>Sales</td><td>210000</td><td>220000</td><td>10000</td><td>4.76</td><td>Above Budget</td></tr><tr><td>IT</td><td>105000</td><td>112000</td><td>7000</td><td>6.67</td><td>Above Budget</td></tr><tr><td>Finance</td><td>62000</td><td>63000</td><td>1000</td><td>1.61</td><td>Above Budget</td></tr></tbody></table></div>
+
+				<h3>2. Month-over-month change</h3>
+<pre><code>SELECT
+    m.month,
+    d.department_name,
+    m.actual,
+    LAG(m.actual) OVER (PARTITION BY d.department_name ORDER BY m.month) AS previous_month_actual,
+    m.actual - LAG(m.actual) OVER (PARTITION BY d.department_name ORDER BY m.month) AS change_from_previous_month
+FROM monthly_finance m
+JOIN departments d ON d.department_id = m.department_id
+ORDER BY d.department_name, m.month;</code></pre>
+				<p><strong>Output:</strong></p>
+				<div class="table-wrapper"><table><thead><tr><th>month</th><th>department_name</th><th>actual</th><th>previous_month_actual</th><th>change_from_previous_month</th></tr></thead><tbody><tr><td>2026-01-01</td><td>Finance</td><td>28000</td><td>NULL</td><td>NULL</td></tr><tr><td>2026-02-01</td><td>Finance</td><td>35000</td><td>28000</td><td>7000</td></tr><tr><td>2026-01-01</td><td>IT</td><td>60000</td><td>NULL</td><td>NULL</td></tr><tr><td>2026-02-01</td><td>IT</td><td>52000</td><td>60000</td><td>-8000</td></tr><tr><td>2026-01-01</td><td>Sales</td><td>95000</td><td>NULL</td><td>NULL</td></tr><tr><td>2026-02-01</td><td>Sales</td><td>125000</td><td>95000</td><td>30000</td></tr></tbody></table></div>
+
+				<h3>3. Months above and below budget</h3>
+<pre><code>SELECT
+    d.department_name,
+    COUNT(m.month) AS total_months,
+    SUM(CASE WHEN m.actual &gt; m.budget THEN 1 ELSE 0 END) AS above_budget_months,
+    SUM(CASE WHEN m.actual &lt; m.budget THEN 1 ELSE 0 END) AS below_budget_months,
+    SUM(m.actual) - SUM(m.budget) AS total_variance
+FROM monthly_finance m
+JOIN departments d ON d.department_id = m.department_id
+GROUP BY d.department_id, d.department_name
+ORDER BY total_variance DESC;</code></pre>
+				<p><strong>Output:</strong></p>
+				<div class="table-wrapper"><table><thead><tr><th>department_name</th><th>total_months</th><th>above_budget_months</th><th>below_budget_months</th><th>total_variance</th></tr></thead><tbody><tr><td>Sales</td><td>2</td><td>1</td><td>1</td><td>10000</td></tr><tr><td>IT</td><td>2</td><td>1</td><td>1</td><td>7000</td></tr><tr><td>Finance</td><td>2</td><td>1</td><td>1</td><td>1000</td></tr></tbody></table></div>
+
+				<h3>4. Departments above the average</h3>
+<pre><code>WITH department_totals AS (
+    SELECT department_id, SUM(actual) AS total_actual
+    FROM monthly_finance
+    GROUP BY department_id
+),
+average_total AS (
+    SELECT AVG(total_actual) AS avg_actual
+    FROM department_totals
+)
+SELECT d.department_name, dt.total_actual
+FROM department_totals dt
+JOIN departments d ON d.department_id = dt.department_id
+CROSS JOIN average_total a
+WHERE dt.total_actual &gt; a.avg_actual;</code></pre>
+				<p><strong>Output:</strong></p>
+				<div class="table-wrapper"><table><thead><tr><th>department_name</th><th>total_actual</th></tr></thead><tbody><tr><td>Sales</td><td>220000</td></tr></tbody></table></div>
+
+				<h3>5. Final management report with running total</h3>
+<pre><code>SELECT
+    m.month,
+    d.department_name,
+    m.budget,
+    m.actual,
+    m.actual - m.budget AS variance,
+    ROUND((m.actual - m.budget) * 100.0 / m.budget, 2) AS variance_pct,
+    SUM(m.actual) OVER (
+        PARTITION BY d.department_name
+        ORDER BY m.month
+        ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+    ) AS cumulative_actual
+FROM monthly_finance m
+JOIN departments d ON d.department_id = m.department_id
+ORDER BY d.department_name, m.month;</code></pre>
+				<p><strong>Output:</strong></p>
+				<div class="table-wrapper"><table><thead><tr><th>month</th><th>department_name</th><th>budget</th><th>actual</th><th>variance</th><th>variance_pct</th><th>cumulative_actual</th></tr></thead><tbody><tr><td>2026-01-01</td><td>Finance</td><td>30000</td><td>28000</td><td>-2000</td><td>-6.67</td><td>28000</td></tr><tr><td>2026-02-01</td><td>Finance</td><td>32000</td><td>35000</td><td>3000</td><td>9.38</td><td>63000</td></tr><tr><td>2026-01-01</td><td>IT</td><td>50000</td><td>60000</td><td>10000</td><td>20.00</td><td>60000</td></tr><tr><td>2026-02-01</td><td>IT</td><td>55000</td><td>52000</td><td>-3000</td><td>-5.45</td><td>112000</td></tr><tr><td>2026-01-01</td><td>Sales</td><td>100000</td><td>95000</td><td>-5000</td><td>-5.00</td><td>95000</td></tr><tr><td>2026-02-01</td><td>Sales</td><td>110000</td><td>125000</td><td>15000</td><td>13.64</td><td>220000</td></tr></tbody></table></div>
+
+
+				<h2>Key findings</h2>
+				<ul>
+					<li>Total budget was <strong>&euro;377,000</strong> and total actual spending <strong>&euro;395,000</strong>, so spending is <strong>4.77%</strong> above budget (&euro;18,000 over).</li>
+					<li><strong>Sales</strong> has the largest overspend in euros: &euro;220,000 against a &euro;210,000 budget (+&euro;10,000, 4.76%).</li>
+					<li><strong>IT</strong> has the highest overspend in percentage terms: +&euro;7,000, or 6.67%.</li>
+					<li><strong>Finance</strong> is only slightly over: +&euro;1,000 (1.61%).</li>
+					<li>Sales spending rose by <strong>&euro;30,000</strong> from January to February, the biggest monthly increase. IT fell by &euro;8,000.</li>
+					<li>Every department had <strong>one month above and one month below</strong> budget, but all three finished the period over budget.</li>
+					<li>Sales is the only department above the average department total (&euro;131,667).</li>
+				</ul>
+
+				<h2>Recommendation</h2>
+				<p>Investigate Sales first for the size of its overspend and its February jump, then review IT's cost drivers because its percentage overspend is the highest. These results show where to look, not why the variances happened. With more months and cost categories, the same queries can support regular monthly reporting.</p>
+
+				<h2>Tools used</h2>
+				<p>SQL (MySQL), JOINs, GROUP BY, CASE WHEN, CTEs, window functions (LAG, running totals), variance analysis.</p>
+
+				<ul class="actions special">
+					<li><a href="index.html" class="button">Back to portfolio</a></li>
+				</ul>
+			</section>
+
+		</div>
+
+		<!-- Copyright -->
+		<div id="copyright">
+			<ul><li>&copy; Shahriar The Analyst</li></ul>
+		</div>
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.scrollex.min.js"></script>
+	<script src="assets/js/jquery.scrolly.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+
+</body>
+</html>

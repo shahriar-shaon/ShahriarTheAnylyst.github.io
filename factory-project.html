@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Factory Production Performance - Shahriar The Analyst</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+</head>
+<body class="is-preload">
+
+	<div id="wrapper" class="fade-in">
+
+		<!-- Header -->
+		<header id="header">
+			<a href="index.html" class="logo">Shahriar The Analyst</a>
+		</header>
+
+		<!-- Main -->
+		<div id="main">
+
+			<section class="post">
+				<header class="major">
+					<span class="date">Power BI Dashboard Project</span>
+					<h1>How efficient is our factory production?</h1>
+					<p>I analysed 2,500 production records from two plants (Jan 2025 to Oct 2026) in Power BI to track output, quality, cost and profit, and built an interactive dashboard from the results.</p>
+				</header>
+
+				<!-- FINAL DASHBOARD -->
+				<h2>Final dashboard</h2>
+				<p><em>Final Factory Production Performance Dashboard (screenshot of the interactive Power BI version). The slicers filter by year-month, plant, production line, product category and shift.</em></p>
+				<div class="image main"><img src="images/factory-dashboard.png" alt="Final Power BI factory production dashboard" /></div>
+
+				<h2>The challenge</h2>
+				<p>A factory manager needs one clear view of production: how much is made, how much is defective, how efficient the machines are, and whether the business is profitable, so problems can be found and fixed quickly.</p>
+
+				<h2>The data</h2>
+				<p>An Excel file with 2,500 production records and 30 columns: date, shift, plant, production line, product category, planned / produced / good / rejected quantity, downtime, runtime, material / labor / overhead cost, sales value, defect rate, OEE, inventory, customer, region and delivery status. The results I measured are <strong>OEE %</strong>, <strong>Defect Rate %</strong> and <strong>Profit</strong>.</p>
+
+				<h2>What I did in Power BI</h2>
+				<ul>
+					<li><strong>Loaded and cleaned the data:</strong> Imported the Excel sheet, checked for missing values and set the correct data types.</li>
+					<li><strong>Created a Year-Month field:</strong> From the date column, to show trends from 2025-Jan to 2026-Oct.</li>
+					<li><strong>Wrote DAX measures:</strong>
+						<ul>
+							<li>Total Production, Good Production and Rejected Quantity.</li>
+							<li>OEE % and Defect Rate %.</li>
+							<li>Sales Value, Total Cost, Profit and Profit Margin %.</li>
+						</ul>
+					</li>
+					<li><strong>Designed the dashboard:</strong> With 8 KPI cards, 5 charts and 5 slicers so anyone can filter the results.</li>
+				</ul>
+
+				<h2>Behind the dashboard: visuals</h2>
+				<ul>
+					<li><strong>Production Trend:</strong> line chart of output by month.</li>
+					<li><strong>Sales vs Cost Trend:</strong> line chart comparing revenue and cost over time.</li>
+					<li><strong>Production by Line:</strong> bar chart ranking the 8 production lines.</li>
+					<li><strong>Delivery Status:</strong> donut chart of Pending, Delivered and In Transit orders.</li>
+					<li><strong>Rejected Quantity by Product Category:</strong> bar chart to find where quality problems are.</li>
+				</ul>
+
+				<h2>Key findings</h2>
+				<ul>
+					<li>Total production was <strong>3.99M</strong> units, of which <strong>3.83M</strong> were good, a defect rate of <strong>3.94%</strong>.</li>
+					<li>Overall equipment effectiveness (OEE) was <strong>83.7%</strong>.</li>
+					<li>Sales value was <strong>9.54M</strong> against a cost of <strong>5.18M</strong>, giving <strong>4.36M</strong> profit and a <strong>45.7%</strong> margin.</li>
+					<li><strong>Components</strong> have the most rejected units (about 65K), followed by Packaging (60K). Beverage is lowest at 32K.</li>
+					<li><strong>Line-7</strong> produces the most and Line-5 the least, but the 8 lines are fairly close.</li>
+					<li><strong>Delivery is split almost evenly:</strong> Pending 34.7%, Delivered 33.2% and In Transit 32.0%. Only a third of orders are delivered.</li>
+					<li>Sales and cost move together month to month, and both drop sharply in the last month (Oct 2026), which is probably an incomplete month.</li>
+				</ul>
+
+				<h2>Recommendation</h2>
+				<p>Focus quality checks on Components and Packaging, where most rejects happen. Speed up delivery to reduce the share of pending orders, and keep monitoring OEE by line and shift to push it above 83.7%.</p>
+
+				<h2>Tools used</h2>
+				<p>Power BI Desktop, DAX, KPI design, Excel, Dashboard design.</p>
+
+				<ul class="actions special">
+					<li><a href="index.html" class="button">Back to portfolio</a></li>
+				</ul>
+			</section>
+
+		</div>
+
+		<!-- Copyright -->
+		<div id="copyright">
+			<ul><li>&copy; Shahriar The Analyst</li></ul>
+		</div>
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.scrollex.min.js"></script>
+	<script src="assets/js/jquery.scrolly.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+
+</body>
+</html>

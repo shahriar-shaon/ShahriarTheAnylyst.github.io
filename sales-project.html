@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Sales Performance Dashboard - Shahriar The Analyst</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+</head>
+<body class="is-preload">
+
+	<div id="wrapper" class="fade-in">
+
+		<!-- Header -->
+		<header id="header">
+			<a href="index.html" class="logo">Shahriar The Analyst</a>
+		</header>
+
+		<!-- Main -->
+		<div id="main">
+
+			<section class="post">
+				<header class="major">
+					<span class="date">Power BI Dashboard Project</span>
+					<h1>Where do our sales and profit come from?</h1>
+					<p>I analysed 527 sales transactions across 2024 and 2025 in Power BI to see which sale types, products and categories drive revenue, and built an interactive dashboard from the results.</p>
+				</header>
+
+				<!-- FINAL DASHBOARD -->
+				<h2>Final dashboard</h2>
+				<p><em>Final Sales Performance Dashboard (screenshot of the interactive Power BI version). The slicers filter by year, month, sale type and payment mode.</em></p>
+				<div class="image main"><img src="images/sales-dashboard.png" alt="Final Power BI sales performance dashboard" /></div>
+
+				<h2>The challenge</h2>
+				<p>A business wants one clear view of its sales: how much it sells, how much profit it makes, and which channels, products and categories perform best, so managers can make faster decisions.</p>
+
+				<h2>The data</h2>
+				<p>An Excel file with two sheets. <strong>Input Data</strong> has 527 transactions (1 Jan 2024 to 31 Dec 2025) with date, product ID, quantity, sale type, payment mode and discount %. <strong>Master Data</strong> has 45 products with name, category, unit of measure, buying price and selling price. The results I measured are <strong>Total Sales</strong> and <strong>Profit</strong>.</p>
+
+				<h2>What I did in Power BI</h2>
+				<ul>
+					<li><strong>Loaded and cleaned the data:</strong> Imported both Excel sheets, checked for missing values and set the correct data types.</li>
+					<li><strong>Built the data model:</strong> Linked Master Data to Input Data using <code>PRODUCT ID</code>, so every sale gets its product name, category and prices.</li>
+					<li><strong>Created a date table:</strong> To analyse sales by year, month and day.</li>
+					<li><strong>Wrote DAX measures:</strong>
+						<ul>
+							<li>Total Selling Value and Total Cost.</li>
+							<li>Profit and Profit % (profit divided by sales).</li>
+							<li>Average Discount % and Average Units per Transaction.</li>
+						</ul>
+					</li>
+					<li><strong>Designed the dashboard:</strong> With 6 KPI cards, 6 charts and 4 slicers so anyone can filter the results.</li>
+				</ul>
+
+				<h2>Behind the dashboard: visuals</h2>
+				<ul>
+					<li><strong>Sales &amp; Profit by Month:</strong> column chart to see the trend across the year.</li>
+					<li><strong>Sales by Type and Payment Mode:</strong> donut charts for the channel and payment split.</li>
+					<li><strong>Daily Sales:</strong> area chart to spot peak days.</li>
+					<li><strong>Sales by Product:</strong> bar chart of the top 10 products.</li>
+					<li><strong>Sales by Category:</strong> treemap to compare the five categories.</li>
+				</ul>
+
+				<h2>Key findings</h2>
+				<ul>
+					<li>Total sales were <strong>$367K</strong> with <strong>$34K</strong> profit, a profit margin of <strong>10.3%</strong>.</li>
+					<li>The average discount was <strong>8.7%</strong>, and the average order had <strong>8 units</strong>.</li>
+					<li><strong>Direct Sales</strong> lead with $189K (51.7%), followed by Online $123K (33.5%) and Wholesaler $54K (14.8%).</li>
+					<li><strong>Payment mode is balanced:</strong> Online $185K (50.5%) and Cash $181K (49.5%).</li>
+					<li><strong>Top products:</strong> Plastic Mat and Carpet Roll (about $21K each), then Rubber Mat and Silk Fabric ($18K).</li>
+					<li><strong>Categories are close:</strong> PersonalCare $87K, Household $85K and Beverages $84K. Furnishing is the lowest at $48K.</li>
+					<li><strong>January is the strongest month</strong> and April the weakest, with monthly profit between $2K and $4K.</li>
+				</ul>
+
+				<h2>Recommendation</h2>
+				<p>Keep investing in Direct Sales, while growing Online and Wholesaler sales, which together make up less than half of revenue. Review discounts on low-margin products to lift the 10.3% profit margin, and plan stock and promotions around the peak months.</p>
+
+				<h2>Tools used</h2>
+				<p>Power BI Desktop, DAX, Data modelling, Excel, Dashboard design.</p>
+
+				<ul class="actions special">
+					<li><a href="index.html" class="button">Back to portfolio</a></li>
+				</ul>
+			</section>
+
+		</div>
+
+		<!-- Copyright -->
+		<div id="copyright">
+			<ul><li>&copy; Shahriar The Analyst</li></ul>
+		</div>
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.scrollex.min.js"></script>
+	<script src="assets/js/jquery.scrolly.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+
+</body>
+</html>
